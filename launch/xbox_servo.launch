@@ -1,0 +1,9 @@
+<launch>
+  <node name = "joy_node" pkg = "joy" type = "joy_node">
+    <param name = "dev" value = "/dev/input/js1"/>
+  </node>
+
+  <node name = "xbox_sub" pkg = "arduino_ros" type = "xbox_sub.cpp">
+  </node>
+</launch>
+

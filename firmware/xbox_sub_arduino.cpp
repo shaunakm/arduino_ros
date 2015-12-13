@@ -9,25 +9,26 @@ const int led_pin = 13;
 const int servo_pin = 9;
 String stringOn, stringOff;
 
-int last_value = 90;
+int angle = 90;
 
 Servo servo;
 
 void msg_cb(const std_msgs::String& xbox_data)
 {
+
 	if(String(xbox_data.data) == stringOn)
 	{
-		int i;
-		digitalWrite(led_pin,HIGH);
-		for(i = last_value;i>0;i--)
-			servo.write(i);
+		angle -= 5;
+		digitalWrite(led_pin,HIGH);  // Right rotation
+		if(angle>=0 && angle <=180)
+			servo.write(angle);
 	}
     else if(String(xbox_data.data) == stringOff)
     {
-    	int i;
-		digitalWrite(led_pin,LOW);
-		for(i = last_value;i<180;i++)
-			servo.write(i);
+   		angle +=5;
+		digitalWrite(led_pin,LOW);	// Left rotation
+		if(angle>=0 && angle <=180)
+			servo.write(angle);
 	}
 	else
 		digitalWrite(led_pin,HIGH-digitalRead(led_pin));
@@ -41,6 +42,8 @@ void setup()
 	stringOff = String("rl");
 	pinMode(led_pin,OUTPUT);
 	servo.attach(servo_pin);
+
+	servo.write(90);
 
 	nh.initNode();
 	nh.subscribe(sub);	

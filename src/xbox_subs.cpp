@@ -8,7 +8,7 @@ using namespace std;
 std_msgs::String str_msg;
 
 //sensor_msgs::Joy xbox;
-long int axis;
+int axis;
 
 void xboxCallBack(const sensor_msgs::Joy::ConstPtr& xboxmsg)
 {
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 
 		cout<<axis<<" and ";
 		//ROS_INFO("%d",xboxmsg->buttons);
-		ROS_INFO("chalne de dost..!!\n");
+		ROS_INFO("Processing data\n");
 
 		pub.publish(str_msg);
 

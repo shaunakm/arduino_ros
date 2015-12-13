@@ -40,3 +40,9 @@ generate_arduino_firmware(xbox_sub_arduino
   BOARD uno
   PORT /dev/ttyACM0
 )
+
+generate_arduino_firmware(xbox
+  SRCS xbox.cpp ${ROS_LIB_DIR}/time.cpp
+  BOARD uno
+  PORT /dev/ttyACM0
+)
