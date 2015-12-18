@@ -32,13 +32,13 @@ void xbox_cb(const sensor_msgs::Joy& xbox_data)
 	// Controlling base servo which is 360 degree servo.
 	if(xbox_data.buttons[5] == 1)
 	{
-		if(base_angle >= 0 && base_angle <= 360)
+		if(base_angle <= 360)
 			base_angle += 2;
 		base_servo.write(base_angle);
 	}
 	if(xbox_data.buttons[6] == 1)
 	{
-		if(base_angle >= 2 && base_angle <= 360)
+		if(base_angle >= 2)
 			base_angle -= 2;
 		base_servo.write(base_angle);
 	}
@@ -46,14 +46,14 @@ void xbox_cb(const sensor_msgs::Joy& xbox_data)
 	// Code to control shoulder servos.
 	if(xbox_data.axes[0] == 1)
 	{
-		if(shoulder_angle >= 0 && shoulder_angle <=180)
+		if(shoulder_angle <=180)
 			shoulder_angle += 2;
 		shoulder_servo1.write(shoulder_angle);
 		shoulder_servo2.write(shoulder_angle);
 	}
 	if(xbox_data.axes[0] == -1)
 	{
-		if(shoulder_angle >= 0 && shoulder_angle <=180)
+		if(shoulder_angle >= 0)
 			shoulder_angle -= 2;
 		shoulder_servo1.write(shoulder_angle);
 		shoulder_servo2.write(shoulder_angle);
@@ -62,26 +62,59 @@ void xbox_cb(const sensor_msgs::Joy& xbox_data)
 	// Code to control the elbow servo.
 	if(xbox_data.axes[1] == 1)
 	{
-		if(elbow_angle >= 0 && elbow_angle <= 180)
+		if(elbow_angle <= 180)
 			elbow_angle += 2;
 		elbow_servo.write(elbow_angle);
 	}
 	if(xbox_data.axes[1] == -1)
 	{
-		if(elbow_angle >= 0 && elbow_angle <= 180)
+		if(elbow_angle >= 0)
 			elbow_angle -= 2;
 		elbow_servo.write(elbow_angle);
 	}
+
+	// Code to control wrist servo.
+	if(xbox_data.axes[2] == 1)
+	{
+		if(wrist_angle <= 180)
+			wrist_angle += 2;
+		wrist_servo.write(wrist_angle);
+	}
+	if(xbox_data.axes[2] == -1)
+	{
+		if(wrist_angle >=0)
+			wrist_angle -=2;
+		wrist_servo.write(wrist_angle);
+	}
+
+	// Code to control the gripper.
+	if(xbox_data.axes[3] == 1)
+	{
+		if(gripper_angle <= 180)
+			gripper_angle += 2;
+		gripper_servo.write(gripper_angle);
+	}
+	if(xbox_data.axes[3] == -1)
+	{
+		if(gripper_angle >= 0)
+			gripper_angle -= 2;
+		gripper_servo.write(gripper_angle);
+	}
+
 	digitalWrite(led_pin,HIGH-digitalRead(led_pin));
 }
 
+// Initializing subscriber named 'sub' for 'joy' node.
 ros::Subscriber<sensor_msgs::Joy>sub("joy",&xbox_cb);
 
 void setup()
 {
+
+	// Initialize the ROS node.
 	nh.initNode();
 	nh.subscribe(sub);
 
+	// Setup the I/O pins.
 	pinMode(led_pin, OUTPUT);
 	base_servo.attach(base_servo_pin);
 	shoulder_servo1.attach(shoulder_servo_pin1);
