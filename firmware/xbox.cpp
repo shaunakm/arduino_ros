@@ -5,50 +5,74 @@
 
 ros::NodeHandle nh;
 
+// Arduino pins for each joint servo.
 const int led_pin = 13;
+const int base_servo_pin = 3;
+const int shoulder_servo_pin1 = 5;
+const int shoulder_servo_pin2 = 6;
+const int elbow_servo_pin = 9;
+const int wrist_servo_pin = 10;
+const int gripper_servo_pin = 11;
 const int servo_pin1 = 9;
 const int servo_pin2 = 10;
-int angle1 = 60;
-int angle2 = 00;
-int axis;
 
-Servo servo1, servo2;
+// Angle variables for each joint.
+int base_angle = 90;
+int shoulder_angle = 90;
+int elbow_angle = 90;
+int wrist_angle = 90;
+int gripper_angle = 0;
 
+// Servo objects for each servo.
+Servo base_servo, shoulder_servo1, shoulder_servo2, elbow_servo, wrist_servo, gripper_servo;
+
+// Callback function subscribing the joy_node which senses the changes in xbox controller and invokes he function.
 void xbox_cb(const sensor_msgs::Joy& xbox_data)
 {
-	//axis = xbox_data.axes[0];
+	// Controlling base servo which is 360 degree servo.
+	if(xbox_data.buttons[5] == 1)
+	{
+		if(base_angle >= 0 && base_angle <= 360)
+			base_angle += 2;
+		base_servo.write(base_angle);
+	}
+	if(xbox_data.buttons[6] == 1)
+	{
+		if(base_angle >= 2 && base_angle <= 360)
+			base_angle -= 2;
+		base_servo.write(base_angle);
+	}
+
+	// Code to control shoulder servos.
 	if(xbox_data.axes[0] == 1)
 	{
-		if(angle1 >= 0 && angle1 <=180)
-			angle1 += 4;
-		servo1.write(angle1);
-		servo2.write(angle1);
-		//digitalWrite(led_pin, HIGH);
+		if(shoulder_angle >= 0 && shoulder_angle <=180)
+			shoulder_angle += 2;
+		shoulder_servo1.write(shoulder_angle);
+		shoulder_servo2.write(shoulder_angle);
 	}
 	if(xbox_data.axes[0] == -1)
 	{
-		if(angle1 >= 0 && angle1 <=180)
-			angle1 -= 4;
-		servo1.write(angle1);
-		servo2.write(angle2);
-		//digitalWrite(led_pin, LOW);
+		if(shoulder_angle >= 0 && shoulder_angle <=180)
+			shoulder_angle -= 2;
+		shoulder_servo1.write(shoulder_angle);
+		shoulder_servo2.write(shoulder_angle);
 	}
-	/*if(xbox_data.axes[1] == 1)
+
+	// Code to control the elbow servo.
+	if(xbox_data.axes[1] == 1)
 	{
-		if(angle2 >=0 && angle2 <= 180)
-			angle2 += 5;
-		servo2.write(angle2);
+		if(elbow_angle >= 0 && elbow_angle <= 180)
+			elbow_angle += 2;
+		elbow_servo.write(elbow_angle);
 	}
 	if(xbox_data.axes[1] == -1)
 	{
-		if(angle2 >=0 && angle2 <= 180)
-			angle2 -= 5;
-		servo2.write(angle2);
-	}*/
+		if(elbow_angle >= 0 && elbow_angle <= 180)
+			elbow_angle -= 2;
+		elbow_servo.write(elbow_angle);
+	}
 	digitalWrite(led_pin,HIGH-digitalRead(led_pin));
-
-	//else
-	//digitalWrite(led_pin,HIGH-digitalRead(led_pin));
 }
 
 ros::Subscriber<sensor_msgs::Joy>sub("joy",&xbox_cb);
@@ -59,11 +83,12 @@ void setup()
 	nh.subscribe(sub);
 
 	pinMode(led_pin, OUTPUT);
-	servo1.attach(servo_pin1);
-	servo2.attach(servo_pin2);
-
-	servo1.write(angle1);
-	servo2.write(angle1);
+	base_servo.attach(base_servo_pin);
+	shoulder_servo1.attach(shoulder_servo_pin1);
+	shoulder_servo2.attach(shoulder_servo_pin2);
+	elbow_servo.attach(elbow_servo_pin);
+	wrist_servo.attach(wrist_servo_pin);
+	gripper_servo.attach(gripper_servo_pin);
 }
 
 void loop()
