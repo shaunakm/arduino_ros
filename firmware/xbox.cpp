@@ -17,11 +17,11 @@ const int servo_pin1 = 9;
 const int servo_pin2 = 10;
 
 // Angle variables for each joint.
-int base_angle = 90;
-int shoulder_angle = 90;
-int elbow_angle = 90;
-int wrist_angle = 90;
-int gripper_angle = 0;
+int base_angle = 70;
+int shoulder_angle = 100;
+int elbow_angle = 30;
+int wrist_angle = 30;
+int gripper_angle = 40;
 
 // Servo objects for each servo.
 Servo base_servo, shoulder_servo1, shoulder_servo2, elbow_servo, wrist_servo, gripper_servo;
@@ -33,13 +33,13 @@ void xbox_cb(const sensor_msgs::Joy& xbox_data)
 	if(xbox_data.buttons[5] == 1)
 	{
 		if(base_angle <= 360)
-			base_angle += 2;
+			base_angle += 3;
 		base_servo.write(base_angle);
 	}
 	if(xbox_data.buttons[6] == 1)
 	{
-		if(base_angle >= 2)
-			base_angle -= 2;
+		if(base_angle >= 0)
+			base_angle -= 3;
 		base_servo.write(base_angle);
 	}
 
@@ -47,14 +47,14 @@ void xbox_cb(const sensor_msgs::Joy& xbox_data)
 	if(xbox_data.axes[0] == 1)
 	{
 		if(shoulder_angle <=180)
-			shoulder_angle += 2;
+			shoulder_angle += 3;
 		shoulder_servo1.write(shoulder_angle);
 		shoulder_servo2.write(shoulder_angle);
 	}
 	if(xbox_data.axes[0] == -1)
 	{
 		if(shoulder_angle >= 0)
-			shoulder_angle -= 2;
+			shoulder_angle -= 3;
 		shoulder_servo1.write(shoulder_angle);
 		shoulder_servo2.write(shoulder_angle);
 	}
@@ -63,13 +63,13 @@ void xbox_cb(const sensor_msgs::Joy& xbox_data)
 	if(xbox_data.axes[1] == 1)
 	{
 		if(elbow_angle <= 180)
-			elbow_angle += 2;
+			elbow_angle += 3;
 		elbow_servo.write(elbow_angle);
 	}
 	if(xbox_data.axes[1] == -1)
 	{
 		if(elbow_angle >= 0)
-			elbow_angle -= 2;
+			elbow_angle -= 3;
 		elbow_servo.write(elbow_angle);
 	}
 
@@ -77,13 +77,13 @@ void xbox_cb(const sensor_msgs::Joy& xbox_data)
 	if(xbox_data.axes[2] == 1)
 	{
 		if(wrist_angle <= 180)
-			wrist_angle += 2;
+			wrist_angle += 3;
 		wrist_servo.write(wrist_angle);
 	}
 	if(xbox_data.axes[2] == -1)
 	{
 		if(wrist_angle >=0)
-			wrist_angle -=2;
+			wrist_angle -=3;
 		wrist_servo.write(wrist_angle);
 	}
 
@@ -122,6 +122,12 @@ void setup()
 	elbow_servo.attach(elbow_servo_pin);
 	wrist_servo.attach(wrist_servo_pin);
 	gripper_servo.attach(gripper_servo_pin);
+
+	base_servo.write(base_angle);
+	shoulder_servo1.write(shoulder_angle);
+	elbow_servo.write(elbow_angle);
+	wrist_servo.write(wrist_angle);
+	gripper_servo.write(gripper_angle);
 }
 
 void loop()
