@@ -19,9 +19,9 @@ const int servo_pin2 = 10;
 // Angle variables for each joint.
 int base_angle = 70;
 int shoulder_angle = 100;
-int elbow_angle = 30;
+int elbow_angle = 90;
 int wrist_angle = 30;
-int gripper_angle = 40;
+int gripper_angle = 20;
 
 // Servo objects for each servo.
 Servo base_servo, shoulder_servo1, shoulder_servo2, elbow_servo, wrist_servo, gripper_servo;
@@ -30,13 +30,13 @@ Servo base_servo, shoulder_servo1, shoulder_servo2, elbow_servo, wrist_servo, gr
 void xbox_cb(const sensor_msgs::Joy& xbox_data)
 {
 	// Controlling base servo which is 360 degree servo.
-	if(xbox_data.buttons[5] == 1)
+	if(xbox_data.buttons[6] == 1)
 	{
-		if(base_angle <= 360)
+		if(base_angle <= 180)
 			base_angle += 3;
 		base_servo.write(base_angle);
 	}
-	if(xbox_data.buttons[6] == 1)
+	if(xbox_data.buttons[7] == 1)
 	{
 		if(base_angle >= 0)
 			base_angle -= 3;

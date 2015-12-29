@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   rosserial_client
   std_msgs
   joy
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -47,11 +48,11 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
+ add_message_files(
+   FILES
+   data.msg
 #   Message2.msg
-# )
+ )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -68,10 +69,11 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+generate_messages(
+   DEPENDENCIES
+   std_msgs
+   arduino_ros
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -232,3 +234,6 @@ target_link_libraries(servo_pub ${catkin_LIBRARIES})
 
 add_executable(xbox_subs src/xbox_subs.cpp)
 target_link_libraries(xbox_subs ${catkin_LIBRARIES})
+
+add_executable(joint_angle src/joint_angle.cpp)
+target_link_libraries(joint_angle ${catkin_LIBRARIES})
