@@ -107,7 +107,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES arduino_ros
-#  CATKIN_DEPENDS rosserial_arduino rosserial_client std_msgs
+  CATKIN_DEPENDS rosserial_arduino rosserial_client std_msgs message_runtime
 #  DEPENDS system_lib
 )
 
@@ -237,3 +237,4 @@ target_link_libraries(xbox_subs ${catkin_LIBRARIES})
 
 add_executable(joint_angle src/joint_angle.cpp)
 target_link_libraries(joint_angle ${catkin_LIBRARIES})
+add_dependencies(joint_angle arduino_ros_generate_messages_cpp)
