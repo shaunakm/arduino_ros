@@ -223,6 +223,9 @@ rosserial_add_client_target(firmware xbox_sub_arduino-upload)
 rosserial_add_client_target(firmware xbox ALL)
 rosserial_add_client_target(firmware xbox-upload)
 
+rosserial_add_client_target(firmware arm_servo_angles ALL)
+rosserial_add_client_target(firmware arm_servo_angles-upload)
+
 add_executable(listener src/listener.cpp)
 target_link_libraries(listener ${catkin_LIBRARIES})
 
