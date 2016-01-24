@@ -54,11 +54,12 @@ void kinematic_angles(const arduino_ros::data& angles_data)
 			if((angles_data.angles[2] - current_angle.angles[2]) > 0)
 			{
 				current_angle.angles[2] += 2;
-				elbow_servo.
+				elbow_servo.write(angles_data.angles[2]);
 			}
 			else if((angles_data.angles[2] - current_angle.angles[2]) < 0)
 			{
-				current_angle.angles[2] += 2;	
+				current_angle.angles[2] += 2;
+				elbow_servo.write(angles_data.angles[2]);
 			}
 		}
 		/*
