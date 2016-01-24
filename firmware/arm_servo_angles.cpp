@@ -23,6 +23,7 @@ int shoulder_angle = 100;
 int elbow_angle = 90;
 int wrist_angle = 30;
 int gripper_angle = 20;
+arduino_ros::data current_angle;
 
 // Servos objects for each servo.
 Servo base_servo, shoulder_servo1, shoulder_servo2, elbow_servo, wrist_servo, gripper_servo;
@@ -32,10 +33,40 @@ void kinematic_angles(const arduino_ros::data& angles_data)
 {
 	if(angles_data.angles[0] >= 0 && angles_data.angles[1] >= 0 && angles_data.angles[2] >= 0)
 	{
+		while((angles_data.angles[1] - current_angle.angles[1]) != 0)
+		{
+			if((angles_data.angles[1] - current_angle.angles[1]) > 0)
+			{
+				current_angle.angles[1] += 2;
+				shoulder_servo1.write(angles_data.angles[1]);
+				shoulder_servo2.write(angles_data.angles[1]);
+			}
+			else if((angles_data.angles[1] - current_angle.angles[1]) < 0)
+			{
+				current_angle.angles[1] += 2;
+				shoulder_servo1.write(angles_data.angles[1]);
+				shoulder_servo2.write(angles_data.angles[1]);	
+			}
+		}
+
+		while((angles_data.angles[2] - current_angle.angles[2]) != 0)
+		{
+			if((angles_data.angles[2] - current_angle.angles[2]) > 0)
+			{
+				current_angle.angles[2] += 2;
+				elbow_servo.
+			}
+			else if((angles_data.angles[2] - current_angle.angles[2]) < 0)
+			{
+				current_angle.angles[2] += 2;	
+			}
+		}
+		/*
 		base_servo.write(angles_data.angles[0]);
 		shoulder_servo1.write(angles_data.angles[1]);
 		shoulder_servo2.write(angles_data.angles[1]);
 		elbow_servo.write(angles_data.angles[2]);
+		*/
 	}
    	digitalWrite(led_pin, HIGH-digitalRead(led_pin));
 }
@@ -56,6 +87,8 @@ void setup()
 	wrist_servo.attach(wrist_servo_pin);
 	gripper_servo.attach(gripper_servo_pin);
 
+	current_angle.angles[1] = 0;
+	current_angle.angles[2] = 0;
 	base_servo.write(base_angle);
 	shoulder_servo1.write(shoulder_angle);
 	elbow_servo.write(elbow_angle);
