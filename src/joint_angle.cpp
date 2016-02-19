@@ -10,9 +10,11 @@ const float shoulder_link = 100;
 const float elbow_link = 150;
 float elbow_theta;
 float shoulder_theta;
+float base_theta;
 
 float elbow_angle(double, double);
 float shoulder_angle(double, double);
+float base_angle(double, double);
 
 arduino_ros::data joint_angles;
 
@@ -20,18 +22,18 @@ int main(int argc, char **argv)
 {
 	ros::init(argc,argv,"joint_angle");
 	ros::NodeHandle n;
-	ros::Publisher pub = n.advertise<arduino_ros::data>("angles",100);
+	ros::Publisher pub = n.advertise<arduino_ros::data>("angles",10000);
 	ros::Rate loop_rate(10);
 
 	while(ros::ok())
 	{
-		double pos_x, pos_y;
-		cout<<"Enter the x and y position in mm: ";
+		double pos_x, pos_y, pos_z;
+		cout<<"Enter the (x,y,z) position in mm: ";
 		cin>>pos_x>>pos_y;
 
-		joint_angles.angles[0] = 90.0; 
-		joint_angles.angles[1] = shoulder_angle(pos_x, pos_y);
-		joint_angles.angles[2] = elbow_angle(pos_x, pos_y);
+		joint_angles.angles[0] = base_angle(pos_x, pos_y); 
+		joint_angles.angles[1] = shoulder_angle(pos_y, pos_z);
+		joint_angles.angles[2] = elbow_angle(pos_x, pos_z);
 
 		pub.publish(joint_angles);
 
@@ -61,4 +63,13 @@ float shoulder_angle(double x, double y)
 	shoulder_theta = 180 * shoulder_theta / PI;
 
 	return shoulder_theta;
+}
+
+float base_angle(double x, double y)
+{
+	base_theta = atan2(y,x);
+
+	base_theta = 180 * base_theta / PI;
+
+	return base_theta;
 }

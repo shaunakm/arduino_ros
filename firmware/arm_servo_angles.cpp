@@ -1,4 +1,4 @@
-// Node which subscribes to the /angle topic and writes the servo angle.
+// Node which subscribes to the /angle topic and writes the angle values on servo angle.
 #include <ros.h>
 #include <Arduino.h>
 #include <arduino_ros/data.h>
@@ -14,8 +14,8 @@ const int shoulder_servo_pin2 = 6;
 const int elbow_servo_pin = 9;
 const int wrist_servo_pin = 10;
 const int gripper_servo_pin = 11;
-const int servo_pin1 = 9;
-const int servo_pin2 = 10;
+//const int servo_pin1 = 9;
+//const int servo_pin2 = 10;
 
 // Angle variables for each joint.
 int base_angle = 70;
@@ -23,7 +23,8 @@ int shoulder_angle = 100;
 int elbow_angle = 90;
 int wrist_angle = 30;
 int gripper_angle = 20;
-arduino_ros::data current_angle;
+float current_shoulder;
+float current_elbow;
 
 // Servos objects for each servo.
 Servo base_servo, shoulder_servo1, shoulder_servo2, elbow_servo, wrist_servo, gripper_servo;
@@ -33,41 +34,47 @@ void kinematic_angles(const arduino_ros::data& angles_data)
 {
 	if(angles_data.angles[0] >= 0 && angles_data.angles[1] >= 0 && angles_data.angles[2] >= 0)
 	{
-		while((angles_data.angles[1] - current_angle.angles[1]) != 0)
+		/*
+		while((angles_data.angles[1] - current_shoulder) != 0)
 		{
-			if((angles_data.angles[1] - current_angle.angles[1]) > 0)
+			if((angles_data.angles[1] - current_shoulder) > 0)
 			{
-				current_angle.angles[1] += 2;
-				shoulder_servo1.write(angles_data.angles[1]);
-				shoulder_servo2.write(angles_data.angles[1]);
+				current_shoulder += 1;
+				shoulder_servo1.write(current_shoulder);
+				shoulder_servo2.write(current_shoulder);
 			}
-			else if((angles_data.angles[1] - current_angle.angles[1]) < 0)
+			else if((angles_data.angles[1] - current_shoulder) < 0)
 			{
-				current_angle.angles[1] += 2;
-				shoulder_servo1.write(angles_data.angles[1]);
-				shoulder_servo2.write(angles_data.angles[1]);	
+				current_shoulder += 1;
+				shoulder_servo1.write(current_shoulder);
+				shoulder_servo2.write(current_shoulder);	
 			}
+			//delay(10);
 		}
 
-		while((angles_data.angles[2] - current_angle.angles[2]) != 0)
+		//delay(100);
+
+		while((angles_data.angles[2] - current_elbow) != 0)
 		{
-			if((angles_data.angles[2] - current_angle.angles[2]) > 0)
+			if((angles_data.angles[2] - current_elbow) > 0)
 			{
-				current_angle.angles[2] += 2;
-				elbow_servo.write(angles_data.angles[2]);
+				current_elbow += 1;
+				elbow_servo.write(current_elbow);
 			}
-			else if((angles_data.angles[2] - current_angle.angles[2]) < 0)
+			else if((angles_data.angles[2] - current_elbow) < 0)
 			{
-				current_angle.angles[2] += 2;
-				elbow_servo.write(angles_data.angles[2]);
+				current_elbow += 1;
+				elbow_servo.write(current_elbow);
 			}
+			//delay(10);	
 		}
-		/*
+		*/
 		base_servo.write(angles_data.angles[0]);
 		shoulder_servo1.write(angles_data.angles[1]);
 		shoulder_servo2.write(angles_data.angles[1]);
 		elbow_servo.write(angles_data.angles[2]);
-		*/
+		nh.spinOnce();
+		Serial.println("Hello there");
 	}
    	digitalWrite(led_pin, HIGH-digitalRead(led_pin));
 }
@@ -88,8 +95,8 @@ void setup()
 	wrist_servo.attach(wrist_servo_pin);
 	gripper_servo.attach(gripper_servo_pin);
 
-	current_angle.angles[1] = 0;
-	current_angle.angles[2] = 0;
+	current_shoulder = 0;
+	current_elbow = 0;
 	base_servo.write(base_angle);
 	shoulder_servo1.write(shoulder_angle);
 	elbow_servo.write(elbow_angle);
