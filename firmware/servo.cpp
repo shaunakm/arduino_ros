@@ -6,7 +6,8 @@
 
 //#include <sstream>
 #include <ros.h>
-#include <Servo.h>
+//#include <Servo.h>
+#include <VarSpeedServo.h>
 #include <Arduino.h>
 #include <std_msgs/UInt16.h>
 
@@ -14,7 +15,8 @@ using namespace std;
 
 ros::NodeHandle nh;
 
-Servo servo;
+//Servo servo;
+VarSpeedServo servo;
 
 void servo_cb(const std_msgs::UInt16& cmd_msgs)
 {
@@ -31,7 +33,7 @@ void setup()
 {
 	nh.initNode();
 	nh.subscribe(sub);
-
+	
 	pinMode(13,OUTPUT);
 
 	servo.attach(9);

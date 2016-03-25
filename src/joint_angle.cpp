@@ -28,12 +28,13 @@ int main(int argc, char **argv)
 	while(ros::ok())
 	{
 		double pos_x, pos_y, pos_z;
-		cout<<"Enter the (x,y,z) position in mm: ";
+		cout<<"Enter the (x,y) position in mm: ";
 		cin>>pos_x>>pos_y;
 
-		joint_angles.angles[0] = base_angle(pos_x, pos_y); 
-		joint_angles.angles[1] = shoulder_angle(pos_y, pos_z);
-		joint_angles.angles[2] = elbow_angle(pos_x, pos_z);
+		//joint_angles.angles[0] = base_angle(pos_x, pos_y);
+		joint_angles.angles[0] = 90;
+		joint_angles.angles[1] = shoulder_angle(pos_y, pos_x);
+		joint_angles.angles[2] = elbow_angle(pos_y, pos_x);
 
 		pub.publish(joint_angles);
 

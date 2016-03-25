@@ -226,6 +226,9 @@ rosserial_add_client_target(firmware xbox-upload)
 rosserial_add_client_target(firmware arm_servo_angles ALL)
 rosserial_add_client_target(firmware arm_servo_angles-upload)
 
+rosserial_add_client_target(firmware ir_ranger ALL)
+rosserial_add_client_target(firmware ir_ranger-upload)
+
 add_executable(listener src/listener.cpp)
 target_link_libraries(listener ${catkin_LIBRARIES})
 
