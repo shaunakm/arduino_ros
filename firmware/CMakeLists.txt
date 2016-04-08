@@ -58,3 +58,9 @@ generate_arduino_firmware(ir_ranger
   BOARD uno
   PORT /dev/ttyACM0
 )
+
+generate_arduino_firmware(servo_angles
+  SRCS servo_angles.cpp ${ROS_LIB_DIR}/time.cpp
+  BOARD uno
+  PORT /dev/ttyACM0
+)

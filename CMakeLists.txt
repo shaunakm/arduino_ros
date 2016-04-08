@@ -229,6 +229,9 @@ rosserial_add_client_target(firmware arm_servo_angles-upload)
 rosserial_add_client_target(firmware ir_ranger ALL)
 rosserial_add_client_target(firmware ir_ranger-upload)
 
+rosserial_add_client_target(firmware servo_angles ALL)
+rosserial_add_client_target(firmware servo_angles-upload)
+
 add_executable(listener src/listener.cpp)
 target_link_libraries(listener ${catkin_LIBRARIES})
 
@@ -244,3 +247,7 @@ target_link_libraries(xbox_subs ${catkin_LIBRARIES})
 add_executable(joint_angle src/joint_angle.cpp)
 target_link_libraries(joint_angle ${catkin_LIBRARIES})
 add_dependencies(joint_angle arduino_ros_generate_messages_cpp)
+
+add_executable(arm_angles src/arm_angles.cpp)
+target_link_libraries(arm_angles ${catkin_LIBRARIES})
+add_dependencies(arm_angles arduino_ros_generate_messages_cpp)
