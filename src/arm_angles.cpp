@@ -6,15 +6,14 @@
 
 using namespace std;
 
-const float l1 = 100;
-const float l2 = 150;
+const float l1 = 110;
+const float l2 = 180;
 float elbow_theta;
 float shoulder_theta;
 float base_theta;
 
 float elbow_angle(double, double);
 float shoulder_angle(double, double);
-void path_planning(int);
 
 arduino_ros::data joint_angles;
 
@@ -34,8 +33,9 @@ int main(int argc, char **argv)
 
 		cout<<"Initial Position"<<endl;
 		joint_angles.angles[0] = 90;
-		joint_angles.angles[1] = shoulder_angle(-68.3324, 197.322);
-		joint_angles.angles[2] = elbow_angle(-68.3324, 197.322);
+		joint_angles.angles[1] = shoulder_angle(60.496, 231.61);
+		joint_angles.angles[2] = elbow_angle(60.496, 231.61);
+		//joint_angles.angles[3] = 180;
 
 		pub.publish(joint_angles);
 
@@ -69,12 +69,20 @@ int main(int argc, char **argv)
 			{
 				cout<<"Picking The Object"<<endl;
 				joint_angles.angles[0] = 90;
-				joint_angles.angles[1] = 360 + shoulder_angle(-164.926, -78.5841);
-				joint_angles.angles[2] = elbow_angle(-164.926, -78.5841);
+				joint_angles.angles[1] = shoulder_angle(-275.507, 59.2169);
+				joint_angles.angles[2] = elbow_angle(-275.507, 59.2169);
+				//joint_angles.angles[3] = (double)180;
 
 				pub.publish(joint_angles);
+				ros::Duration(1).sleep();
 
-				ros::Duration(4).sleep();
+				joint_angles.angles[0] = 90;
+				joint_angles.angles[1] = shoulder_angle(-275.507, 59.2169);
+				joint_angles.angles[2] = elbow_angle(-275.507, 59.2169);
+				//joint_angles.angles[3] = 0;
+
+				pub.publish(joint_angles);
+				ros::Duration(3).sleep();
 
 				status = 2;
 			}
@@ -83,8 +91,9 @@ int main(int argc, char **argv)
 			{
 				cout<<"Initial Position"<<endl;
 				joint_angles.angles[0] = 90;
-				joint_angles.angles[1] = shoulder_angle(-68.3324, 197.322);
-				joint_angles.angles[2] = elbow_angle(-68.3324, 197.322);
+				joint_angles.angles[1] = shoulder_angle(60.496, 231.61);
+				joint_angles.angles[2] = elbow_angle(60.496, 231.61);				
+				//joint_angles.angles[3] = (double)0;
 
 				pub.publish(joint_angles);
 
@@ -101,23 +110,34 @@ int main(int argc, char **argv)
 					joint_angles.angles[0] = 45;
 				if(object_status == 2)
 					joint_angles.angles[0] = 135;
-				joint_angles.angles[1] = shoulder_angle(-68.3324, 197.322);
-				joint_angles.angles[2] = elbow_angle(-68.3324, 197.322);
+				joint_angles.angles[1] = shoulder_angle(60.496, 231.61);
+				joint_angles.angles[2] = elbow_angle(60.496, 231.61);
+				//joint_angles.angles[3] = (double)0;
 
 				pub.publish(joint_angles);
-
 				ros::Duration(2).sleep();
 
 				if(object_status == 1)
 					joint_angles.angles[0] = 45;
 				if(object_status == 2)
 					joint_angles.angles[0] = 135;
-				joint_angles.angles[1] = 360 + shoulder_angle(-164.926, -78.5841);
-				joint_angles.angles[2] = elbow_angle(-164.926, -78.5841);
+				joint_angles.angles[1] = shoulder_angle(-275.507, 59.2169);
+				joint_angles.angles[2] = elbow_angle(-275.507, 59.2169);
+				//joint_angles.angles[3] = 0;
 
 				pub.publish(joint_angles);
+				ros::Duration(3).sleep();
 
-				ros::Duration(4).sleep();
+
+				if(object_status == 1)
+					joint_angles.angles[0] = 45;
+				if(object_status == 2)
+					joint_angles.angles[0] = 135;
+				joint_angles.angles[1] = shoulder_angle(-275.507, 59.2169);
+				joint_angles.angles[2] = elbow_angle(-275.507, 59.2169);
+				//joint_angles.angles[3] = 180;
+				pub.publish(joint_angles);
+				ros::Duration(1).sleep();
 
 				status = 1;
 			}
@@ -153,10 +173,4 @@ float shoulder_angle(double x, double y)
 	shoulder_theta = 180 * shoulder_theta / pi;
 
 	return shoulder_theta;
-}
-
-
-void path_planning(int status)
-{
-	
 }

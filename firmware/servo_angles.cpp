@@ -8,7 +8,7 @@
 ros::NodeHandle nh;
 
 std_msgs::Bool done;
-ros::Publisher status("done_bit",&done);
+//ros::Publisher status("done_bit",&done);
 
 // Arduino pins for each joint servo.
 const int led_pin = 13;
@@ -16,10 +16,8 @@ const int base_servo_pin = 3;
 const int shoulder_servo_pin1 = 5;
 const int shoulder_servo_pin2 = 6;
 const int elbow_servo_pin = 9;
-const int wrist_servo_pin = 10;
-const int gripper_servo_pin = 11;
-//const int servo_pin1 = 9;
-//const int servo_pin2 = 10;
+const int wrist_servo_pin = 11;
+const int gripper_servo_pin = 10;
 
 // Angle variables for each joint.
 int base_angle = 90;
@@ -29,6 +27,7 @@ int wrist_angle = 30;
 int gripper_angle = 20;
 float current_shoulder;
 float current_elbow;
+bool flag = false;
 
 // Servos objects for each servo.
 Servo base_servo, shoulder_servo1, shoulder_servo2, elbow_servo, wrist_servo, gripper_servo;
@@ -36,7 +35,7 @@ Servo base_servo, shoulder_servo1, shoulder_servo2, elbow_servo, wrist_servo, gr
 // Callback function for inverse kinematics.
 void kinematic_angles(const arduino_ros::data& angles_data)
 {
-	done.data = false;
+	//flag = false;
 	//status.publish(&done);
 
 	if(angles_data.angles[0] >= 0 && angles_data.angles[1] >= 0 && angles_data.angles[2] >= 0)
@@ -46,14 +45,14 @@ void kinematic_angles(const arduino_ros::data& angles_data)
 		shoulder_servo1.write(angles_data.angles[1]);
 		shoulder_servo2.write(angles_data.angles[1]);
 		elbow_servo.write(angles_data.angles[2]);
+		gripper_servo.write(angles_data.angles[3]);
 		nh.spinOnce();
 		Serial.println("Hello there");
 	}
    	digitalWrite(led_pin, HIGH-digitalRead(led_pin));
 
-   	delay(500);
-
-   	done.data = true;
+   	flag = true;
+   	delay(100);
    	//status.publish(&done);
 }
 
@@ -62,7 +61,7 @@ ros::Subscriber<arduino_ros::data>sub("angles",&kinematic_angles);
 void setup()
 {
 	nh.initNode();
-	nh.advertise(status);
+	//nh.advertise(status);
 	nh.subscribe(sub);
 
 	// Setup the I/O pins.
@@ -87,7 +86,10 @@ void setup()
 void loop()
 {
 	//done.data = true;
-   	status.publish(&done);
+	//done.data = flag;
+   	//status.publish(&done);
 	nh.spinOnce();
 	delay(10);
+
+	flag = false;
 }

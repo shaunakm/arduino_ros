@@ -8,7 +8,8 @@ ros::NodeHandle nh;
 
 //Servo servo;
 VarSpeedServo servo_var;
-const int servo_pin = 9;
+const int servo_pin1 = 5;
+const int servo_pin2 = 6;
 const int led_pin = 13;
 
 void angle_cb(const std_msgs::UInt16& angle)
@@ -31,7 +32,8 @@ void setup()
 
 	pinMode(led_pin,OUTPUT);
 	//servo.attach(servo_pin);
-	servo_var.attach(servo_pin,0,180);
+	servo_var.attach(servo_pin1,0,180);
+	servo_var.attach(servo_pin2,0,180);
 }
 
 void loop()
