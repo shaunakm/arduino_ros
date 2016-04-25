@@ -16,8 +16,8 @@ const int base_servo_pin = 3;
 const int shoulder_servo_pin1 = 5;
 const int shoulder_servo_pin2 = 6;
 const int elbow_servo_pin = 9;
-const int wrist_servo_pin = 11;
-const int gripper_servo_pin = 10;
+const int wrist_servo_pin = 10;
+const int gripper_servo_pin = 11;
 
 // Angle variables for each joint.
 int base_angle = 90;
@@ -45,7 +45,8 @@ void kinematic_angles(const arduino_ros::data& angles_data)
 		shoulder_servo1.write(angles_data.angles[1]);
 		shoulder_servo2.write(angles_data.angles[1]);
 		elbow_servo.write(angles_data.angles[2]);
-		gripper_servo.write(angles_data.angles[3]);
+		//gripper_servo.write(angles_data.angles[3]);
+		gripper_servo.write(60);
 		nh.spinOnce();
 		Serial.println("Hello there");
 	}

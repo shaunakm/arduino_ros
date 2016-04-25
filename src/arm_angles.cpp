@@ -33,8 +33,8 @@ int main(int argc, char **argv)
 
 		cout<<"Initial Position"<<endl;
 		joint_angles.angles[0] = 90;
-		joint_angles.angles[1] = shoulder_angle(60.496, 231.61);
-		joint_angles.angles[2] = elbow_angle(60.496, 231.61);
+		joint_angles.angles[1] = shoulder_angle(-92.0106, 220.989);
+		joint_angles.angles[2] = elbow_angle(-92.0106, 220.989);
 		//joint_angles.angles[3] = 180;
 
 		pub.publish(joint_angles);
@@ -69,16 +69,16 @@ int main(int argc, char **argv)
 			{
 				cout<<"Picking The Object"<<endl;
 				joint_angles.angles[0] = 90;
-				joint_angles.angles[1] = shoulder_angle(-275.507, 59.2169);
-				joint_angles.angles[2] = elbow_angle(-275.507, 59.2169);
+				joint_angles.angles[1] = 360 + shoulder_angle(-280, -5.52026);
+				joint_angles.angles[2] = elbow_angle(-280, -5.52026);
 				//joint_angles.angles[3] = (double)180;
 
 				pub.publish(joint_angles);
 				ros::Duration(1).sleep();
 
 				joint_angles.angles[0] = 90;
-				joint_angles.angles[1] = shoulder_angle(-275.507, 59.2169);
-				joint_angles.angles[2] = elbow_angle(-275.507, 59.2169);
+				joint_angles.angles[1] = 360 + shoulder_angle(-280, -5.52026);
+				joint_angles.angles[2] = elbow_angle(-280, -5.52026);
 				//joint_angles.angles[3] = 0;
 
 				pub.publish(joint_angles);
@@ -91,8 +91,8 @@ int main(int argc, char **argv)
 			{
 				cout<<"Initial Position"<<endl;
 				joint_angles.angles[0] = 90;
-				joint_angles.angles[1] = shoulder_angle(60.496, 231.61);
-				joint_angles.angles[2] = elbow_angle(60.496, 231.61);				
+				joint_angles.angles[1] = shoulder_angle(-92.0106, 220.989);
+				joint_angles.angles[2] = elbow_angle(-92.0106, 220.989);				
 				//joint_angles.angles[3] = (double)0;
 
 				pub.publish(joint_angles);
@@ -110,8 +110,8 @@ int main(int argc, char **argv)
 					joint_angles.angles[0] = 45;
 				if(object_status == 2)
 					joint_angles.angles[0] = 135;
-				joint_angles.angles[1] = shoulder_angle(60.496, 231.61);
-				joint_angles.angles[2] = elbow_angle(60.496, 231.61);
+				joint_angles.angles[1] = shoulder_angle(-92.0106, 220.989);
+				joint_angles.angles[2] = elbow_angle(-92.0106, 220.989);
 				//joint_angles.angles[3] = (double)0;
 
 				pub.publish(joint_angles);
@@ -121,8 +121,8 @@ int main(int argc, char **argv)
 					joint_angles.angles[0] = 45;
 				if(object_status == 2)
 					joint_angles.angles[0] = 135;
-				joint_angles.angles[1] = shoulder_angle(-275.507, 59.2169);
-				joint_angles.angles[2] = elbow_angle(-275.507, 59.2169);
+				joint_angles.angles[1] = 360 + shoulder_angle(-280, -5.52026);
+				joint_angles.angles[2] = elbow_angle(-280, -5.52026);
 				//joint_angles.angles[3] = 0;
 
 				pub.publish(joint_angles);
@@ -133,8 +133,8 @@ int main(int argc, char **argv)
 					joint_angles.angles[0] = 45;
 				if(object_status == 2)
 					joint_angles.angles[0] = 135;
-				joint_angles.angles[1] = shoulder_angle(-275.507, 59.2169);
-				joint_angles.angles[2] = elbow_angle(-275.507, 59.2169);
+				joint_angles.angles[1] = 360 + shoulder_angle(-280, -5.52026);
+				joint_angles.angles[2] = elbow_angle(-280, -5.52026);
 				//joint_angles.angles[3] = 180;
 				pub.publish(joint_angles);
 				ros::Duration(1).sleep();
