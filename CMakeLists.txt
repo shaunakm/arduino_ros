@@ -202,51 +202,27 @@ rosserial_configure_client(
   TOOLCHAIN_FILE ${ROSSERIAL_ARDUINO_TOOLCHAIN}
 )
 
-rosserial_add_client_target(firmware hello ALL)
-rosserial_add_client_target(firmware hello-upload)
-
-rosserial_add_client_target(firmware servo ALL)
-rosserial_add_client_target(firmware servo-upload)
-
-rosserial_add_client_target(firmware button_servo ALL)
-rosserial_add_client_target(firmware button_servo-upload)
-
-rosserial_add_client_target(firmware blink ALL)
-rosserial_add_client_target(firmware blink-upload)
-
-rosserial_add_client_target(firmware servo_sub ALL)
-rosserial_add_client_target(firmware servo_sub-upload)
-
-rosserial_add_client_target(firmware xbox_sub_arduino ALL)
-rosserial_add_client_target(firmware xbox_sub_arduino-upload)
-
 rosserial_add_client_target(firmware xbox ALL)
 rosserial_add_client_target(firmware xbox-upload)
-
-rosserial_add_client_target(firmware arm_servo_angles ALL)
-rosserial_add_client_target(firmware arm_servo_angles-upload)
-
-rosserial_add_client_target(firmware ir_ranger ALL)
-rosserial_add_client_target(firmware ir_ranger-upload)
 
 rosserial_add_client_target(firmware servo_angles ALL)
 rosserial_add_client_target(firmware servo_angles-upload)
 
-add_executable(listener src/listener.cpp)
-target_link_libraries(listener ${catkin_LIBRARIES})
+#add_executable(listener src/listener.cpp)
+#target_link_libraries(listener ${catkin_LIBRARIES})
 
-add_executable(talker src/talker.cpp)
-target_link_libraries(talker ${catkin_LIBRARIES})
+#add_executable(talker src/talker.cpp)
+#target_link_libraries(talker ${catkin_LIBRARIES})
 
-add_executable(servo_pub src/servo_pub.cpp)
-target_link_libraries(servo_pub ${catkin_LIBRARIES})
+#add_executable(servo_pub src/servo_pub.cpp)
+#target_link_libraries(servo_pub ${catkin_LIBRARIES})
 
-add_executable(xbox_subs src/xbox_subs.cpp)
-target_link_libraries(xbox_subs ${catkin_LIBRARIES})
+#add_executable(xbox_subs src/xbox_subs.cpp)
+#target_link_libraries(xbox_subs ${catkin_LIBRARIES})
 
-add_executable(joint_angle src/joint_angle.cpp)
-target_link_libraries(joint_angle ${catkin_LIBRARIES})
-add_dependencies(joint_angle arduino_ros_generate_messages_cpp)
+#add_executable(joint_angle src/joint_angle.cpp)
+#target_link_libraries(joint_angle ${catkin_LIBRARIES})
+#add_dependencies(joint_angle arduino_ros_generate_messages_cpp)
 
 add_executable(arm_angles src/arm_angles.cpp)
 target_link_libraries(arm_angles ${catkin_LIBRARIES})
