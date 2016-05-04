@@ -24,7 +24,7 @@ int base_angle = 90;
 int shoulder_angle = 100;
 int elbow_angle = 90;
 int wrist_angle = 30;
-int gripper_angle = 20;
+int gripper_angle = 0;
 float current_shoulder;
 float current_elbow;
 bool flag = false;
@@ -45,8 +45,21 @@ void kinematic_angles(const arduino_ros::data& angles_data)
 		shoulder_servo1.write(angles_data.angles[1]);
 		shoulder_servo2.write(angles_data.angles[1]);
 		elbow_servo.write(angles_data.angles[2]);
-		//gripper_servo.write(angles_data.angles[3]);
-		gripper_servo.write(60);
+
+		if(angles_data.angles[0] == 90 && (int)angles_data.angles[1] == 170 && (int)angles_data.angles[2] == 39)
+		{
+			delay(2000);
+			gripper_servo.write(180);
+		}
+
+		if(angles_data.angles[0] == 45 || angles_data.angles[0] == 135)
+		{
+			if((int)angles_data.angles[1] == 170 && (int)angles_data.angles[2] == 39)
+			{
+				delay(2000);
+				gripper_servo.write(0);
+			}
+		}
 		nh.spinOnce();
 		Serial.println("Hello there");
 	}
