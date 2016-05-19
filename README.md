@@ -1,2 +1,3 @@
 # arduino_ros
-> This code covers the basics of controlling the servo motors using _arduino_,_xbox controller_ and _rosserial libraries_ provided by ROS
+> This repository is can be used to control a **4-DOF Robotic Arm** with **XBOX Controller** and as well as
+ **Autonomously using Inverse Kinematics**
