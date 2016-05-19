@@ -7,4 +7,4 @@
 * Connect Xbox Controller and Confugure for [ROS](http://wiki.ros.org/joy)
 * Now open a terminal window and write *roscore* and hit enter.
 * Open new terminal and add path of the current library by using
-<center>$source ./devel/setup.bash</center>
+'''$source ./devel/setup.bash'''
