@@ -28,3 +28,5 @@
 * Flow of Autonomous Control:
  * When you run the node for Autonomous Control, it asks for type of object(1/2).
  * Depending upon the type of the object, the destination of the object is set.
+
+* Note: I will be uploading image processing code as soon as possible.
